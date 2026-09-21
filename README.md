@@ -1,5 +1,23 @@
 # teste_implementacao
 
+## 🐳 Instalação e Execução (Docker) — recomendado
+
+### Pré-requisitos
+- [Docker](https://docs.docker.com/get-docker/) + Docker Compose
+
+### Rodar com Docker
+```bash
+docker compose up --build
+```
+
+
+### Sem Docker (local)
+```bash
+npm install
+npm start
+```
+
+
 **Projeto de estudo** — scaffold inicial em React + TypeScript + Firebase inspirado no projeto "LetMeAsk" (da NLW Together), criado em junho de 2021 para praticar a integração do Create React App com Firebase.
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-4-3178C6?style=flat&logo=typescript&logoColor=white)
