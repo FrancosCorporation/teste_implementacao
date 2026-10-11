@@ -1,0 +1,45 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "rooms": {
+      ".read": "auth !== null && query.orderByChild === 'ownerId' && query.equalTo === auth.uid",
+      ".indexOn": ["ownerId"],
+      "$roomId": {
+        ".read": "auth !== null",
+        ".write": "auth !== null && !data.exists() && newData.child('ownerId').val() === auth.uid",
+        ".validate": "newData.hasChildren(['name', 'ownerId', 'ownerName', 'createdAt']) && newData.child('name').isString() && newData.child('name').val().length >= 3 && newData.child('name').val().length <= 80 && newData.child('ownerId').isString() && newData.child('ownerName').isString() && newData.child('ownerName').val().length <= 60 && newData.child('createdAt').isNumber()",
+        "$other": {
+          ".validate": "$other === 'name' || $other === 'ownerId' || $other === 'ownerName' || $other === 'createdAt'"
+        }
+      }
+    },
+    "questions": {
+      "$roomId": {
+        ".read": "auth !== null && root.child('rooms').child($roomId).exists()",
+        "$questionId": {
+          ".write": "auth !== null && root.child('rooms').child($roomId).exists() && ((!data.exists() && newData.child('authorId').val() === auth.uid) || (!newData.exists() && (auth.uid === root.child('rooms').child($roomId).child('ownerId').val() || auth.uid === data.child('authorId').val())))",
+          ".validate": "newData.hasChildren(['text', 'authorId', 'authorName', 'createdAt', 'answered']) && newData.child('text').isString() && newData.child('text').val().length >= 4 && newData.child('text').val().length <= 350 && newData.child('authorId').isString() && newData.child('authorName').isString() && newData.child('authorName').val().length <= 60 && newData.child('createdAt').isNumber() && newData.child('answered').isBoolean() && (!data.exists() || (newData.child('text').val() === data.child('text').val() && newData.child('authorId').val() === data.child('authorId').val() && newData.child('authorName').val() === data.child('authorName').val() && newData.child('createdAt').val() === data.child('createdAt').val()))",
+          "answered": {
+            ".write": "auth !== null && auth.uid === root.child('rooms').child($roomId).child('ownerId').val()",
+            ".validate": "newData.isBoolean()"
+          },
+          "$other": {
+            ".validate": "$other === 'text' || $other === 'authorId' || $other === 'authorName' || $other === 'createdAt'"
+          }
+        }
+      }
+    },
+    "likes": {
+      "$roomId": {
+        ".read": "auth !== null && root.child('rooms').child($roomId).exists()",
+        "$questionId": {
+          "$uid": {
+            ".write": "auth !== null && auth.uid === $uid && root.child('questions').child($roomId).child($questionId).exists() && (!newData.exists() || newData.val() === true)",
+            ".validate": "newData.isBoolean() && newData.val() === true"
+          }
+        }
+      }
+    }
+  }
+}
