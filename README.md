@@ -65,11 +65,11 @@ docker compose down
 
 | Comando | Ação |
 |---|---|
-| `npm run dev` | inicia o Vite em `http://localhost:3000` |
+| `npm run dev` | inicia o Vite apenas no loopback, em `http://localhost:3000` |
 | `npm run build` | verifica tipos e cria `dist/` |
 | `npm run typecheck` | verifica tipos TypeScript |
 | `npm run lint` | verifica TypeScript/React e regras de hooks |
-| `npm run preview` | serve o build localmente |
+| `npm run preview` | serve o build apenas no loopback |
 
 ## Funcionalidades
 
