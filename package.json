@@ -36,7 +36,8 @@
   "overrides": {
     "@grpc/grpc-js": "1.14.6",
     "re2js": "^2.8.7",
-    "minimatch": "^11.0.1"
+    "minimatch": "^11.0.1",
+    "zod": "^4.6.6"
   },
   "allowScripts": {
     "@firebase/util@1.15.3": false,
